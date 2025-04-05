@@ -3,6 +3,7 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import LabTestList from '@/components/medical-services/lab/LabTestList';
 
 const MedicalServicesPage = () => {
   return (
@@ -27,7 +28,7 @@ const MedicalServicesPage = () => {
                 <CardTitle>Laboratory Tests</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Lab test ordering and results management will be implemented here.</p>
+                <LabTestList />
               </CardContent>
             </Card>
           </TabsContent>

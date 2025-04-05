@@ -11,8 +11,16 @@ import PatientManagement from "./pages/PatientManagement";
 import AppointmentsPage from "./pages/AppointmentsPage";
 import MedicalServicesPage from "./pages/MedicalServicesPage";
 import BedManagementPage from "./pages/BedManagementPage";
+import EmergencyPage from "./pages/EmergencyPage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,6 +34,7 @@ const App = () => (
           <Route path="/appointments" element={<AppointmentsPage />} />
           <Route path="/medical-services" element={<MedicalServicesPage />} />
           <Route path="/bed-management" element={<BedManagementPage />} />
+          <Route path="/emergency" element={<EmergencyPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
