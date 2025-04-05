@@ -10,6 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { createLabTest, updateLabTest } from '@/services/labTestService';
 import { LabTest, CreateLabTestPayload } from '@/types/lab';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 
 interface LabTestFormProps {
   isOpen: boolean;
@@ -21,7 +22,7 @@ const LabTestForm: React.FC<LabTestFormProps> = ({ isOpen, onClose, labTest }) =
   const { toast } = useToast();
   const isEditing = !!labTest;
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<CreateLabTestPayload>({
+  const form = useForm<CreateLabTestPayload>({
     defaultValues: {
       name: labTest?.name || '',
       description: labTest?.description || '',
@@ -31,6 +32,8 @@ const LabTestForm: React.FC<LabTestFormProps> = ({ isOpen, onClose, labTest }) =
       is_active: labTest?.is_active !== undefined ? labTest.is_active : true,
     }
   });
+
+  const { handleSubmit, formState: { errors, isSubmitting }, register } = form;
 
   const onSubmit = async (data: CreateLabTestPayload) => {
     try {
@@ -69,53 +72,61 @@ const LabTestForm: React.FC<LabTestFormProps> = ({ isOpen, onClose, labTest }) =
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input
-                id="name"
-                className="col-span-3"
-                {...register("name", { required: "Name is required" })}
-                error={errors.name?.message}
-              />
+              <div className="col-span-3">
+                <Input
+                  id="name"
+                  className="w-full"
+                  {...register("name", { required: "Name is required" })}
+                />
+                {errors.name && <p className="text-sm font-medium text-destructive mt-1">{errors.name.message}</p>}
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="category" className="text-right">
                 Category
               </Label>
-              <Input
-                id="category"
-                className="col-span-3"
-                {...register("category", { required: "Category is required" })}
-                error={errors.category?.message}
-              />
+              <div className="col-span-3">
+                <Input
+                  id="category"
+                  className="w-full"
+                  {...register("category", { required: "Category is required" })}
+                />
+                {errors.category && <p className="text-sm font-medium text-destructive mt-1">{errors.category.message}</p>}
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="turnaround_time" className="text-right">
                 Turnaround Time
               </Label>
-              <Input
-                id="turnaround_time"
-                className="col-span-3"
-                placeholder="e.g., 24 hours"
-                {...register("turnaround_time", { required: "Turnaround time is required" })}
-                error={errors.turnaround_time?.message}
-              />
+              <div className="col-span-3">
+                <Input
+                  id="turnaround_time"
+                  className="w-full"
+                  placeholder="e.g., 24 hours"
+                  {...register("turnaround_time", { required: "Turnaround time is required" })}
+                />
+                {errors.turnaround_time && <p className="text-sm font-medium text-destructive mt-1">{errors.turnaround_time.message}</p>}
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="cost" className="text-right">
                 Cost
               </Label>
-              <Input
-                id="cost"
-                type="number"
-                min="0"
-                step="0.01"
-                className="col-span-3"
-                {...register("cost", { 
-                  required: "Cost is required",
-                  valueAsNumber: true,
-                  min: { value: 0, message: "Cost must be a positive number" }
-                })}
-                error={errors.cost?.message}
-              />
+              <div className="col-span-3">
+                <Input
+                  id="cost"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className="w-full"
+                  {...register("cost", { 
+                    required: "Cost is required",
+                    valueAsNumber: true,
+                    min: { value: 0, message: "Cost must be a positive number" }
+                  })}
+                />
+                {errors.cost && <p className="text-sm font-medium text-destructive mt-1">{errors.cost.message}</p>}
+              </div>
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="description" className="text-right">
